@@ -1,5 +1,6 @@
 import time
 
+
 class Robot:
     """
     The three primitives robotic paradigm: sense, plan, act [1].
@@ -9,8 +10,9 @@ class Robot:
 
     [1] https://en.wikipedia.org/wiki/Robotic_paradigm
     """
-    def __init__(self, team_id):
-        self.team_id = team_id
+    def __init__(self):
+        self.start_timestamp = time.time()
+        self.problem_solved = False
 
     def sense(self):
         print("Sensing...")
@@ -20,16 +22,18 @@ class Robot:
 
     def act(self):
         print("Acting...")
-        time.sleep(1)
 
     def main(self):
-        self.problem_solved = False
-        while not self.problem_solved:
+        while not self.problem_solved and time.time() - self.start_timestamp < 1:
             self.sense()
             self.plan()
             self.act()
+        if self.problem_solved:
+            print("Solved! Good job, robot!")
+        else:
+            print("Unable to solve! :(")
 
 
 if __name__ == "__main__":
-    robot = Robot(123)
+    robot = Robot()
     robot.main()
